@@ -2,10 +2,13 @@ import pygame as game
 import sys
 game.init()
 
-game.display.set_caption("Platformer Game")
+
 
 screen = game.display.set_mode((640, 640))
 clock = game.time.Clock()
+
+#set display name
+game.display.set_caption("Platformer Game")
 
 running = True
 while running:
