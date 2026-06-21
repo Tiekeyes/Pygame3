@@ -15,6 +15,7 @@ class Game:
         self.img_pos = [160, 260]
         self.movement = [False, False]
 
+        #create collision area
         self.collision_area = game.Rect(50, 50, 300, 50)
 
 
@@ -27,7 +28,10 @@ class Game:
             self.img_pos[1] += self.movement[1] - self.movement[0]
             self.screen.blit(self.img, self.img_pos)
             
+            #define the cloud's hitbox
             img_r = game.Rect(self.img_pos[0], self.img_pos[1], self.img.get_width(), self.img.get_height())
+            
+            #draw collision area on the screen with color based on if the hitbox collides with it
             if(img_r.colliderect(self.collision_area)):
                 game.draw.rect(self.screen,(0, 100, 255), self.collision_area)
             else:
