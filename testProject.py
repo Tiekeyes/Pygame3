@@ -8,7 +8,7 @@ class Game:
         pygame.init()
 
         #set display
-        pygame.display.set_caption("Platformer pygame")
+        pygame.display.set_caption("Platformer in Pygame")
         self.screen = pygame.display.set_mode((640, 480))
         self.clock = pygame.time.Clock()
 
@@ -19,7 +19,7 @@ class Game:
 
         #load all assets
         self.assets = {
-            'player': load_image("entities/player/png")
+            'player': load_image("entities/player.png")
         }
 
 
@@ -29,7 +29,7 @@ class Game:
 
             self.screen.fill((14, 219, 248))
 
-            self.player.update(self.movement[1] - self.movement[0], 0)
+            self.player.update((self.movement[1] - self.movement[0], 0))
             self.player.render(self.screen)
             
             for event in pygame.event.get():
