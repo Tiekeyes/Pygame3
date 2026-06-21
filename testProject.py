@@ -1,6 +1,8 @@
 import pygame as game
-
+import sys
 game.init()
+
+game.display.set_caption("Platformer Game")
 
 screen = game.display.set_mode((640, 640))
 clock = game.time.Clock()
@@ -9,6 +11,8 @@ running = True
 while running:
     for event in game.event.get():
         if(event.type == game.QUIT):
+            game.quit()
+            sys.exit()
             running = False
 
     game.display.update()
