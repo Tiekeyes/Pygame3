@@ -8,6 +8,8 @@ class Game:
     def __init__(self):
         pygame.init()
 
+        self.FPS = 60 
+
         #set display
         pygame.display.set_caption("Platformer in Pygame")
         self.screen = pygame.display.set_mode((640, 480))
@@ -40,7 +42,7 @@ class Game:
             
             self.tilemap.render(self.display)
 
-            self.player.update((self.movement[1] - self.movement[0], 0))
+            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))
             self.player.render(self.display)
             
             for event in pygame.event.get():
@@ -66,6 +68,6 @@ class Game:
 
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
             pygame.display.update()
-            self.clock.tick(60) #runs at 60 fps, dynamic sleep function
+            self.clock.tick(self.FPS) #runs at 60 fps, dynamic sleep function
 
 Game().run()
