@@ -8,7 +8,7 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        self.FPS = 60 
+        self.FPS = 60
 
         #set display
         pygame.display.set_caption("Platformer in Pygame")
