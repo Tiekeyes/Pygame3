@@ -1,6 +1,7 @@
 import pygame
 
-NEIGHBOR_OFFSETS = [(0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
+NEIGHBOR_OFFSETS = [(0, 0), (0, 1), (0, -1), (1, 0), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
+#tiles with physics
 PHYSICS_TILES = {'grass', 'stone'}
 
 class Tilemap:
@@ -24,6 +25,7 @@ class Tilemap:
             surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size)) 
 
 
+    #determines existing tiles around a position
     def tiles_around(self, pos):
         tiles = []
         tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
@@ -32,15 +34,15 @@ class Tilemap:
 
             check_loc = str(tile_loc[0] + offset[0]) + ";" + str(tile_loc[1] + offset[1])
 
-            if check_loc in self.tilemap:
+            if check_loc in self.tilemap: 
                 tiles.append(self.tilemap[check_loc])
 
         return tiles
 
-    
+    #determines the hitboxes of tiles_around based on physics
     def physics_rects_around(self, pos):
         rects = []
-            
+    
         for tile in self.tiles_around(pos):
             if tile['type'] in PHYSICS_TILES:
                 rects.append(pygame.Rect(tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size, self.tile_size, self.tile_size))
