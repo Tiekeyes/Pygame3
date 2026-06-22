@@ -17,19 +17,27 @@ class Tilemap:
     
 
     def render(self, surf, offset=(0, 0)):
-        for tile in self.offgrid_tiles:
-            surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] - offset[0], tile['pos'][1] - offset[1])) 
+        
+        for x in range(offset[0] // self.tile_size, (offset[0] + surf.get_width()) // self.tile_size + 1):
+            for y in range(offset[1] // self.tile_size, (offset[1] + surf.get_height()) // self.tile_size + 1):
+                loc = str(x) + ";" + str(y)
+                if loc in self.tilemap:
+                    tile = self.tilemap[loc]
+                    surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[1]))      
 
-        for loc in self.tilemap:
-            tile = self.tilemap[loc] 
-            surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[1])) 
-
+        #for each tile within off grid tiles
+        #for tile in self.offgrid_tiles:
+            #draw the tile type of variant, at (x, y) with camera offset applied
+            #surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] - offset[0], tile['pos'][1] - offset[1])) 
+           
 
     #determines existing tiles around a position
     def tiles_around(self, pos):
         tiles = []
+        #find the tile the position is on
         tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
 
+        #in each direction 
         for offset in NEIGHBOR_OFFSETS:
 
             check_loc = str(tile_loc[0] + offset[0]) + ";" + str(tile_loc[1] + offset[1])
