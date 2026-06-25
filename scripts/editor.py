@@ -47,10 +47,33 @@ class Editor:
 
             self.display.fill((0, 0, 0))
 
+            #render the tilemap
+            self.scroll[0] += (self.movement[1] - self.movement[0]) * RENDER_SCALE
+            self.scroll[1] += (self.movement[3] - self.movement[2]) * RENDER_SCALE
+            render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
+            self.tilemap.render(self.display, offset=render_scroll)
+
+            #display the current tile selected
             current_tile_img = self.assets[self.tile_list[self.tile_group]][self.tile_variant].copy() 
             current_tile_img.set_alpha(100)
 
-            self.display.blit(current_tile_img, (5, 5)) 
+            #returns the pixel coordiantes of the mouse in respect to the WINDOW
+            mouse_pos = pygame.mouse.get_pos()
+            mouse_pos = (mouse_pos[0] / RENDER_SCALE, mouse_pos[1] / RENDER_SCALE)
+            tile_pos = ((int(mouse_pos[0] + self.scroll[0]) // self.tilemap.tile_size), 
+                        (int(mouse_pos[1] + self.scroll[1]) // self.tilemap.tile_size))
+
+            self.display.blit(current_tile_img, (tile_pos[0] * self.tilemap.tile_size - self.scroll[0], tile_pos[1] * self.tilemap.tile_size - self.scroll[1]))
+            
+            #place tiles
+            if(self.clicking):
+                self.tilemap.tilemap[str(tile_pos[0]) + ";" + str(tile_pos[1])] = {"type": self.tile_list[self.tile_group], "variant": self.tile_variant, "pos": tile_pos}
+            #delete tiles
+            if(self.right_clicking):
+                tile_loc = str(tile_pos[0]) + ";" + str(tile_pos[1])
+                if tile_loc in self.tilemap.tilemap:
+                    del self.tilemap.tilemap[tile_loc]
+
 
             for event in pygame.event.get():
 
@@ -83,7 +106,7 @@ class Editor:
                 if(event.type == pygame.MOUSEBUTTONUP):
                     if(event.button == 1):
                         self.clicking = False
-                    if(event.tbutton == 3):
+                    if(event.button == 3):
                         self.right_clicking = False
 
                 #when a key is pressed
