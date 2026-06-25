@@ -1,6 +1,6 @@
 import pygame
 import sys
-from scripts.entities import PhysicsEntity, Player
+from scripts.entities import Player
 from scripts.utils import load_image, load_images, Animation
 from scripts.tilemap import Tilemap
 from scripts.clouds import Clouds
