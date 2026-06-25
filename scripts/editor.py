@@ -78,8 +78,15 @@ class Editor:
                         if(event.button == 5):
                             self.tile_group = (self.tile_group + 1) % len(self.tile_list)
                             self.tile_variant = 0
-                       
-                #when pressed
+                
+                #when click is released
+                if(event.type == pygame.MOUSEBUTTONUP):
+                    if(event.button == 1):
+                        self.clicking = False
+                    if(event.tbutton == 3):
+                        self.right_clicking = False
+
+                #when a key is pressed
                 if(event.type == pygame.KEYDOWN):
                     if(event.key == pygame.K_LEFT):
                         self.movement[0] = True
