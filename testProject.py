@@ -45,6 +45,7 @@ class Game:
         self.player = Player(self, (50, 50), (8, 15))
         #create tilemap
         self.tilemap = Tilemap(self, tile_size = 16)
+        self.tilemap.load("data/maps/my_map.json")
 
     def run(self):
         #main game loop
